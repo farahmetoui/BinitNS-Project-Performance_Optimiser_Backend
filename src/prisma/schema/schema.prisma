@@ -1,0 +1,78 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model ApplicationToTest {
+    id      String   @id @default(auto()) @map("_id") @db.ObjectId
+    name    String
+    mainUrl String
+    urls    String[]
+
+    Metrics Metrics[]
+
+    Test Test[]
+}
+
+model Metrics {
+    id            String            @id @default(auto()) @map("_id") @db.ObjectId
+    app           ApplicationToTest @relation(fields: [appId], references: [id])
+    appId         String            @db.ObjectId
+    url           String
+    performance   Float?
+    accessibility Float?
+    bestPractices Float?
+    seo           Float?
+    pwa           Float?
+    webVitals     WebVitals?        @relation(fields: [webVitalsId], references: [id])
+    webVitalsId   String?           @unique @db.ObjectId
+    urlRapport    String?
+    urlJsonRapport String?
+
+    testId String? @db.ObjectId
+    test   Test?   @relation(fields: [testId], references: [id])
+}
+
+model WebVitals {
+    id                     String @id @default(auto()) @map("_id") @db.ObjectId
+    firstContentfulPaint   Float
+    largestContentfulPaint Float
+    cumulativeLayoutShift  Float
+    totalBlockingTime      Float
+    interactive            Float
+    speedIndex             Float
+    timeToFirstByte        Float
+    firstInputDelay        Float
+    inputLatency           Float?
+
+    Metrics Metrics?
+}
+
+model Test {
+    id         String            @id @default(auto()) @map("_id") @db.ObjectId
+    app        ApplicationToTest @relation(fields: [appId], references: [id])
+    appId      String            @db.ObjectId
+    Metrics    Metrics[]
+    DateofTest DateTime          @default(now())
+}
+
+model User {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    firstName   String
+    lastName    String
+    userName    String @unique
+    email       String  @unique
+    phonenumber Int
+    password    String
+    role        Role   @default(employee)
+}
+
+enum Role {
+    employee
+    admin
+}

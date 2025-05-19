@@ -1,0 +1,14 @@
+// model Metrics {
+//     id            String            @id @default(auto()) @map("_id") @db.ObjectId
+//     app           ApplicationToTest @relation(fields: [appId], references: [id])
+//     appId         String            @db.ObjectId
+//     url           String
+//     performance   Float?
+//     accessibility Float?
+//     bestPractices Float?
+//     seo           Float?
+//     pwa           Float?
+//     webVitals     WebVitals?        @relation(fields: [webVitalsId], references: [id])
+//     webVitalsId   String?           @unique @db.ObjectId
+//     urlRapport    String?
+// }

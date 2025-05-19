@@ -1,0 +1,14 @@
+// model WebVitals {
+//     id                     String @id @default(auto()) @map("_id") @db.ObjectId
+//     firstContentfulPaint   Float
+//     largestContentfulPaint Float
+//     cumulativeLayoutShift  Float
+//     totalBlockingTime      Float
+//     interactive            Float
+//     speedIndex             Float
+//     timeToFirstByte        Float
+//     firstInputDelay        Float
+//     inputLatency           Float?
+
+//     Metrics Metrics?
+// }

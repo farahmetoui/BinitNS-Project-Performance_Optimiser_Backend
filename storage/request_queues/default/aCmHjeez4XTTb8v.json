@@ -1,0 +1,9 @@
+{
+	"id": "aCmHjeez4XTTb8v",
+	"json": "{\"id\":\"aCmHjeez4XTTb8v\",\"url\":\"https://online-we-fe-u.morgenfund.com/#login\",\"loadedUrl\":\"https://online-we-fe-u.morgenfund.com/#login\",\"uniqueKey\":\"https://online-we-fe-u.morgenfund.com\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"__crawlee\":{\"state\":4}},\"handledAt\":\"2025-03-24T14:50:02.976Z\"}",
+	"method": "GET",
+	"orderNo": null,
+	"retryCount": 0,
+	"uniqueKey": "https://online-we-fe-u.morgenfund.com",
+	"url": "https://online-we-fe-u.morgenfund.com/#login"
+}
