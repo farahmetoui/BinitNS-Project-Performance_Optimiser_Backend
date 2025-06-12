@@ -1,8 +1,0 @@
-// model ApplicationToTest {
-//     id      String   @id @default(auto()) @map("_id") @db.ObjectId
-//     name    String
-//     mainUrl String
-//     urls    String[]
-
-//     Metrics Metrics[]
-// }

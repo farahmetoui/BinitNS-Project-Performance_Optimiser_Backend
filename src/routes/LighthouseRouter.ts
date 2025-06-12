@@ -1,6 +1,4 @@
-import express from "express";
-import { getRapport } from "../LighthousePup"; 
-import {getAllRapport} from "../LighthousePages"
+import express from "express"; 
 import {createApplication} from "../../src/controllers/AppToTestController"
 import {getMetricsAverageController, saveMetrics} from "../../src/controllers/MetricsContoller"
 import {getAllApplicationsController} from "../../src/controllers/AppToTestController"
@@ -11,8 +9,6 @@ import { paginateTablesController } from "@src/controllers/PaginationController"
 
 
 const router = express.Router();
-router.get("/getRapportPupetter", getRapport);
-router.get("/getRapportPages",authorization, getAllRapport);
 router.post("/getTestsNumberBymonth",authorization, getTestsByMonthController);
 router.post("/getAverage",authorization, getMetricsAverageController);
 router.post("/createApplication" , authorization,createApplication);
