@@ -77,8 +77,15 @@ export const getAllApplication = async () => {
   }
 };
 
-export const getGlobalMetricsAverage = async (appId: string) => {
+export const getGlobalMetricsAverage = async (appName:string) => {
   try {
+    const app = await prisma.applicationToTest.findUnique({
+    where: { name: appName },
+  });
+
+  if (!app) {
+    throw new Error(`Application with name "${appName}" not found.`);
+  }
     const scores = {
       currentYearScores: Array(12).fill(0),
       previousYearScores: Array(12).fill(0),
@@ -86,9 +93,9 @@ export const getGlobalMetricsAverage = async (appId: string) => {
 
     const allMetrics = await prisma.metrics.findMany({
       where: {
-        appId,
+        appId :app.id,
         test: {
-          isNot: null,   //pour exlure les metrics qui ne sont pas liés aux tests 
+          isNot: null,    
         },
       },
       include: {

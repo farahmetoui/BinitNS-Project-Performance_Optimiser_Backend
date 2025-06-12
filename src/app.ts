@@ -6,6 +6,7 @@ import logger from 'jet-logger';
 import cors from "cors";
 import lighthouseRouter from './routes/LighthouseRouter';
 import authenticationRouter from './routes/authenticationRouter';
+import commentsRouter from './routes/commentsRouter';
 import 'express-async-errors';
 
 // import BaseRouter from '@src/routes';
@@ -62,7 +63,7 @@ app.use(authorization);
 // Add APIs, must be after middleware
 // app.use(Paths.Base, BaseRouter);
 app.use("/api", lighthouseRouter);
-
+app.use("/api", commentsRouter);
 
 app.get("/authorization", (req, res) => {
   return res.status(StatusCodes.ACCEPTED).send({ message: "authorized" });

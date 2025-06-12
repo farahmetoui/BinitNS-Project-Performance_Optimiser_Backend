@@ -4,14 +4,14 @@ import { getGlobalMetricsAverage } from "@src/services/appToTestService";
 
 export const saveMetrics = async (req: Request, res: Response) => {
     try {
-        const { name ,urls  } = req.body;
+        const { name, urls } = req.body;
 
         if (!name) {
             return res.status(400).json({ error: "Le nom de l'application est requis." });
         }
 
-        const testWithMetrics = await getLighthouseMetrics(name , urls);
-       
+        const testWithMetrics = await getLighthouseMetrics(name, urls);
+
         return res.status(200).json({
             message: "L'analyse Lighthouse a été effectuée avec succès.",
             test: testWithMetrics,
@@ -24,8 +24,13 @@ export const saveMetrics = async (req: Request, res: Response) => {
 
 export const getMetricsAverageController = async (req: Request, res: Response) => {
     try {
-        const averages = await getGlobalMetricsAverage("680b6b598c6be488e08a203a")
-       
+        const { name } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ error: "Name is required in the request body." });
+        }
+        const averages = await getGlobalMetricsAverage(name)
+
         return res.status(200).json({
             averages
         });

@@ -19,7 +19,22 @@ export const getAllDetailMetricsByApp = async (appId: string) => {
       throw new Error(`Error while retrieving the metrics : ${error.message}`);
     }
   };
-  
+  export const getMetricsByTest = async (id: string) => {
+    try {
+      return await prisma.metrics.findMany({
+        where: {
+          testId: id,
+        },
+        include: {
+          webVitals: true,
+        },
+        
+      });
+      
+    } catch (error) {
+      throw new Error(`Error while retrieving the metrics : ${error.message}`);
+    }
+  };
   export const getwebvitalbyId = async (Id: string) => {
     try {
       return await prisma.webVitals.findUnique({

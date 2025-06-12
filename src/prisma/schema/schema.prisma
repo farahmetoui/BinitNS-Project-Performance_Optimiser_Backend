@@ -10,7 +10,7 @@ datasource db {
 
 model ApplicationToTest {
     id      String   @id @default(auto()) @map("_id") @db.ObjectId
-    name    String
+    name    String   @unique
     mainUrl String
     urls    String[]
 
@@ -20,18 +20,18 @@ model ApplicationToTest {
 }
 
 model Metrics {
-    id            String            @id @default(auto()) @map("_id") @db.ObjectId
-    app           ApplicationToTest @relation(fields: [appId], references: [id])
-    appId         String            @db.ObjectId
-    url           String
-    performance   Float?
-    accessibility Float?
-    bestPractices Float?
-    seo           Float?
-    pwa           Float?
-    webVitals     WebVitals?        @relation(fields: [webVitalsId], references: [id])
-    webVitalsId   String?           @unique @db.ObjectId
-    urlRapport    String?
+    id             String            @id @default(auto()) @map("_id") @db.ObjectId
+    app            ApplicationToTest @relation(fields: [appId], references: [id])
+    appId          String            @db.ObjectId
+    url            String
+    performance    Float?
+    accessibility  Float?
+    bestPractices  Float?
+    seo            Float?
+    pwa            Float?
+    webVitals      WebVitals?        @relation(fields: [webVitalsId], references: [id])
+    webVitalsId    String?           @unique @db.ObjectId
+    urlRapport     String?
     urlJsonRapport String?
 
     testId String? @db.ObjectId
@@ -59,6 +59,8 @@ model Test {
     appId      String            @db.ObjectId
     Metrics    Metrics[]
     DateofTest DateTime          @default(now())
+
+    Comments Comments[] @relation("TestComment")
 }
 
 model User {
@@ -66,13 +68,29 @@ model User {
     firstName   String
     lastName    String
     userName    String @unique
-    email       String  @unique
+    email       String @unique
     phonenumber Int
     password    String
-    role        Role   @default(employee)
+    role        Role   @default(developer)
+    sentComments Comments[] @relation("Author")
 }
 
 enum Role {
-    employee
+    tester
+    developer
     admin
+}
+
+model Comments {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    author        User     @relation("Author", fields: [authorId], references: [id])
+    authorId      String
+    message       String
+    DateofComment DateTime @default(now())
+    test        Test     @relation("TestComment", fields: [testId], references: [id])
+    testId      String
+    type        String
+    priority    String
+     
+
 }

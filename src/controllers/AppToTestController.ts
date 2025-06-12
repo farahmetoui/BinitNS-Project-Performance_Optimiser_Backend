@@ -10,7 +10,7 @@ export const createApplication = async (req: Request, res: Response) => {
 
     if (!name ) {
       console.log(" name is empty ");
-      return res.status(400).json({ error: "Le nom et l'URL principale sont obligatoires." });
+      return res.status(400).json({ error: "name and url are required." });
     }
 
     const newApp = await addApplication(name, mainUrl, urls);
@@ -22,7 +22,7 @@ export const createApplication = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 };
-
+ 
 export const getAllApplicationsController = async (req: Request, res: Response): Promise<void> => {
   try {
     const applications = await getAllApplication();

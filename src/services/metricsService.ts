@@ -30,9 +30,7 @@ export const getLighthouseMetrics = async (appName: string, Appurls: string[]) =
 
     try {
 
-        if (!existingApp) {
-            throw new Error(` Application "${appName}" not found .`);
-        }
+  
 
         if (appName == "") {
             return error
@@ -85,19 +83,18 @@ export const getLighthouseMetrics = async (appName: string, Appurls: string[]) =
                     continue;
                 }
 
-                const { lhr } = result;
-                const audits = lhr.audits;
+               
                 const savedWebVitals = await prisma.webVitals.create({
                     data: {
-                        firstContentfulPaint: audits["first-contentful-paint"]?.numericValue ?? 0,
-                        largestContentfulPaint: audits["largest-contentful-paint"]?.numericValue ?? 0,
-                        cumulativeLayoutShift: audits["cumulative-layout-shift"]?.numericValue ?? 0,
-                        totalBlockingTime: audits["total-blocking-time"]?.numericValue ?? 0,
-                        interactive: audits["interactive"]?.numericValue ?? 0,
-                        speedIndex: audits["speed-index"]?.numericValue ?? 0,
-                        timeToFirstByte: audits["server-response-time"]?.numericValue ?? 0,
-                        firstInputDelay: audits["max-potential-fid"]?.numericValue ?? 0,
-                        inputLatency: audits["estimated-input-latency"]?.numericValue ?? 0,
+                        firstContentfulPaint: result.lhr.audits["first-contentful-paint"]?.numericValue ?? 0,
+                        largestContentfulPaint: result.lhr.audits["largest-contentful-paint"]?.numericValue ?? 0,
+                        cumulativeLayoutShift: result.lhr.audits["cumulative-layout-shift"]?.numericValue ?? 0,
+                        totalBlockingTime: result.lhr.audits["total-blocking-time"]?.numericValue ?? 0,
+                        interactive: result.lhr.audits["interactive"]?.numericValue ?? 0,
+                        speedIndex: result.lhr.audits["speed-index"]?.numericValue ?? 0,
+                        timeToFirstByte: result.lhr.audits["server-response-time"]?.numericValue ?? 0,
+                        firstInputDelay: result.lhr.audits["max-potential-fid"]?.numericValue ?? 0,
+                        inputLatency: result.lhr.audits["estimated-input-latency"]?.numericValue ?? 0,
                     },
                 });
 
@@ -107,11 +104,11 @@ export const getLighthouseMetrics = async (appName: string, Appurls: string[]) =
                     data: {
                         app: { connect: { id: existingApp.id } },
                         url,
-                        performance: lhr.categories.performance?.score ?? 0,
-                        accessibility: lhr.categories.accessibility?.score ?? 0,
-                        bestPractices: lhr.categories["best-practices"]?.score ?? 0,
-                        seo: lhr.categories.seo?.score ?? 0,
-                        pwa: lhr.categories.pwa?.score ?? 0,
+                        performance: result.lhr.categories.performance?.score ?? 0,
+                        accessibility: result.lhr.categories.accessibility?.score ?? 0,
+                        bestPractices: result.lhr.categories["best-practices"]?.score ?? 0,
+                        seo: result.lhr.categories.seo?.score ?? 0,
+                        pwa: result.lhr.categories.pwa?.score ?? 0,
                         webVitals: { connect: { id: savedWebVitals.id } },
                         urlRapport: publicUrlRapport,
                         urlJsonRapport: publicUrlJsonRapport,
@@ -148,8 +145,6 @@ export const getLighthouseMetrics = async (appName: string, Appurls: string[]) =
             console.log(" Puppeteer closed.");
         }
     }
-
-
 };
 
 

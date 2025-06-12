@@ -9,7 +9,7 @@ export const createAccountController = async (req: Request, res: Response) => {
     try {
         let userdata = req.body;
         if (userdata.email && userdata.password && userdata.phonenumber &&
-            userdata.userName && userdata.firstName && userdata.lastName) {
+            userdata.userName && userdata.firstName && userdata.lastName ) {
             const isUserExists = await isEmailExists(userdata.email);
             if (!isUserExists) {
                 const token = await createaccountservice(userdata);
@@ -41,7 +41,7 @@ export const loginadminController = async (req: Request, res: Response) => {
             return res.status(StatusCodes.NOT_FOUND).json({ message: 'user not found' });
         }
         else {
-            if (isUserExists.role == "admin") {
+            if (isUserExists.role === "admin" || isUserExists.role === "developer" || isUserExists.role === "tester") {
                 const token = await loginService(password, isUserExists);
 
                 if (!token) {

@@ -35,7 +35,12 @@ export const getTotalTests = async(req: Request, res: Response)=>{
 
 export const getTestsByMonthController = async(req: Request, res: Response)=>{
     try {
-        const monthlyCounts = await getTestsByMonth();
+         const { name } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ error: "Name is required in the request body." });
+        }
+        const monthlyCounts = await getTestsByMonth(name);
         res.status(200).json(monthlyCounts);
     } catch (error) {
         console.error("Error in getting tests By Month :", error);

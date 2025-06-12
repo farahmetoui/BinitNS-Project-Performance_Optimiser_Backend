@@ -57,13 +57,21 @@ export const getTotalTestsNumber = async () => {
   }
 }
 
-export const getTestsByMonth = async () => {
+export const getTestsByMonth = async (appName:string) => {
   try {
+     const app = await prisma.applicationToTest.findUnique({
+    where: { name: appName },
+  });
+  
+  if (!app) {
+    throw new Error(`Application with name "${appName}" not found.`);
+  }
     const currentYear = new Date().getFullYear();
     const results = await prisma.test.groupBy({
       by: ['DateofTest'],
       _count: true,
       where: {
+         appId :app.id,
         DateofTest: {
           gte: new Date(`${currentYear}-01-01`),
           lt: new Date(`${currentYear + 1}-01-01`),
