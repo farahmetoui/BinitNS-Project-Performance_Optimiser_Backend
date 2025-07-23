@@ -2,32 +2,37 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    "lib": ["ES2020", "ESNext", "DOM"], // ✅ Ajout de "DOM" et "ESNext"                 
+    "lib": ["ES2020", "ESNext", "DOM"],
     "strict": true,
     "baseUrl": "./",
-    "esModuleInterop": true,                 
-    "skipLibCheck": true,                     
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@src/*": ["src/*"]
     },
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+
+    // ✅ These two lines are needed for the build to output to dist/
+    "rootDir": "./",
+    "outDir": "dist"
   },
   "ts-node": {
     "swc": true,
     "require": [
       "tsconfig-paths/register",
       "./config.ts"
-    ],
+    ]
   },
   "include": [
-    "src/**/*.ts",
-    "spec/**/*.ts",
-    "config.ts",
-    "scripts",
-    "eslint.config.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "src/public/*"
+    "src/public/*",
+    "dist",
+    "node_modules",
+    "scripts",
+    "spec",
+    "**/*.test.ts"
   ]
 }
