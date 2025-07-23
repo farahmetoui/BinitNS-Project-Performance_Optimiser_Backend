@@ -12,6 +12,7 @@
       "@src/*": ["src/*"]
     },
     "useUnknownInCatchVariables": false,
+    "noImplicitAny": false,
 
     // ✅ These two lines are needed for the build to output to dist/
    "rootDir": "src",
@@ -26,7 +27,7 @@
   },
   "include": [
     "src/**/*.ts",
-     "src/@types/**/*.d.ts"
+     
   ],
   "exclude": [
     "src/public/*",
