@@ -2,7 +2,7 @@
   "name": "backendProject",
   "version": "0.0.0",
   "scripts": {
-    "build": "ts-node ./scripts/build.ts",
+    "build": "tsc",
     "clean-install": "rm -rf ./node_modules && rm -r package-lock.json && npm i",
     "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec ts-node ./src",
     "dev:hot": "nodemon --exec \"npm run dev\" --watch ./src --ext .ts",
