@@ -13,7 +13,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
     }
   try {
     const payload = jwt.verify(token) as IPayload;
-    console.log(payload)
     if (payload.type == "authorization") {
       res.locals.payload = payload;
      
@@ -31,3 +30,4 @@ export default (req: Request, res: Response, next: NextFunction) => {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Unauthorized' });
   }
 };
+

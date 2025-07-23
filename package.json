@@ -27,6 +27,7 @@
     "crawlee": "^3.13.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
+    "expo-server-sdk": "^3.15.0",
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "helmet": "^8.0.0",

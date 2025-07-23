@@ -6,6 +6,10 @@ const SECRET = process.env.SecretKEY || 'secret';
 export interface IPayload {
   id: string,
   type: string;
+  role: string;
+  userName: string;
+  email: string
+
 }
 
 export default {

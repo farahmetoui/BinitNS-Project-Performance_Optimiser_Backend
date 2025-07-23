@@ -64,15 +64,18 @@ model Test {
 }
 
 model User {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    firstName   String
-    lastName    String
-    userName    String @unique
-    email       String @unique
-    phonenumber Int
-    password    String
-    role        Role   @default(developer)
-    sentComments Comments[] @relation("Author")
+    id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+    firstName          String
+    lastName           String
+    userName           String          @unique
+    email              String          @unique
+    phonenumber        Int
+    password           String
+    role               Role            @default(developer)
+    expoPushToken      String?
+    sentComments       Comments[]      @relation("Author")
+    actedNotifications Notifications[] @relation("SentNotifications")
+    notifications      Notifications[] @relation("ReceivedNotifications")
 }
 
 enum Role {
@@ -87,10 +90,20 @@ model Comments {
     authorId      String
     message       String
     DateofComment DateTime @default(now())
-    test        Test     @relation("TestComment", fields: [testId], references: [id])
-    testId      String
-    type        String
-    priority    String
-     
+    test          Test     @relation("TestComment", fields: [testId], references: [id])
+    testId        String
+    type          String?
+    priority      String?
+}
 
+model Notifications {
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    user    User   @relation("ReceivedNotifications", fields: [userId], references: [id])
+    userId  String
+    actor   User   @relation("SentNotifications", fields: [actorId], references: [id])
+    actorId String
+    message String
+    type      String
+    read      Boolean  @default(false)
+    createdAt DateTime @default(now())
 }

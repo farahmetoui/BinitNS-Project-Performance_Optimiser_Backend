@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { isEmailExists } from '../services/UserService';
-import { createaccountservice, loginService } from '../services/authenticationService';
-
+import { addExpoToken, changePasswordService, createaccountservice, loginService } from '../services/authenticationService';
 
 
 export const createAccountController = async (req: Request, res: Response) => {
     try {
         let userdata = req.body;
         if (userdata.email && userdata.password && userdata.phonenumber &&
-            userdata.userName && userdata.firstName && userdata.lastName ) {
+            userdata.userName && userdata.firstName && userdata.lastName) {
             const isUserExists = await isEmailExists(userdata.email);
             if (!isUserExists) {
                 const token = await createaccountservice(userdata);
@@ -31,6 +30,7 @@ export const createAccountController = async (req: Request, res: Response) => {
 export const loginadminController = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body
+        const expoPushToken = req.body.expoPushToken ? req.body.expoPushToken : null;
         if (!email || !password) {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: 'email and password required' });
         }
@@ -43,14 +43,18 @@ export const loginadminController = async (req: Request, res: Response) => {
         else {
             if (isUserExists.role === "admin" || isUserExists.role === "developer" || isUserExists.role === "tester") {
                 const token = await loginService(password, isUserExists);
-
                 if (!token) {
                     return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid password' });
                 }
                 else {
+                    if (expoPushToken) {
+                        await addExpoToken(isUserExists.id, expoPushToken);
+                    }
 
                     res.setHeader('authorization', token);
-                    return res.status(StatusCodes.ACCEPTED).json({ token: token });
+                    return res.status(StatusCodes.ACCEPTED).json({
+                        token: token, user: isUserExists
+                    });
                 }
             } else {
                 return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid access' });
@@ -60,5 +64,22 @@ export const loginadminController = async (req: Request, res: Response) => {
         console.log(error);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'An error occurred while logining' });
     }
+}
+
+export const changePasswordController = async (req: Request, res: Response) => {
+    try {
+        const { userId, newPassword } = req.body;
+        if (!userId || !newPassword) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ message: 'User ID and new password are required' });
+        }
+        const isChanged = await changePasswordService(userId, newPassword);
+
+        return res.status(StatusCodes.OK).json({ message: 'Password changed successfully' });
+
+
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'An error occurred while changing password' });
+    }
+
 }
 

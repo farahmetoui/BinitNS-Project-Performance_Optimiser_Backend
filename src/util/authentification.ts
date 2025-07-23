@@ -35,12 +35,12 @@ export const loginToWebsite = async (page: Page) => {
       page.click('button[data-test-id="login-button"]'),
       page.waitForNavigation({ waitUntil: "networkidle2", timeout: 60000 }),
     ]);
-    console.log(" Connexion réussie !");
+    console.log(" Connection successful !");
 
     // await browser.close();
 
   } catch (error) {
-    console.error(` Erreur lors de l'analyse de :`, error);
+    console.error(` Error to analyse the :`, error);
 
   }
 };
@@ -63,7 +63,7 @@ export const testdashboardbutton = async (page: Page) => {
     // await browser.close();
 
   } catch (error) {
-    console.error(` Erreur lors de l'analyse de :`, error);
+    console.error(` Error to analyse the :`, error);
 
   }
 };

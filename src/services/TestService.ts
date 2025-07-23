@@ -12,6 +12,8 @@ export const getAllTestByApplication = async (appId: string) => {
       },
       include: {
         Metrics: true,
+        Comments: true, 
+        
       },
       orderBy: {
         DateofTest: 'asc',

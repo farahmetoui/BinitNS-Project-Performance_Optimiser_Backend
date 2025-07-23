@@ -1,5 +1,4 @@
 // src/socket/socketServer.ts
-
 import { Server } from "socket.io";
 import http from "http";
 
@@ -35,5 +34,5 @@ export const sendProgressToClients = (pourcentage: number ,treatedUrlIndex: numb
           });
         };
 httpServer.listen(8080, () => {
-    console.log("✅ Serveur Socket.IO lancé sur le port 8080");
+    console.log(" Serveur Socket.IO lancé sur le port 8080");
 });

@@ -5,7 +5,6 @@ import { getAllApplication } from "../services/appToTestService";
 export const createApplication = async (req: Request, res: Response) => {
   try {
     console.log("Requête reçue :", req.body);
-
     const { name, mainUrl, urls } = req.body;
 
     if (!name ) {

@@ -29,7 +29,7 @@ export const createaccountservice = async (userdata: any) => {
         }
 
         let token = jwt.sign(
-            { id: createduser?.id, type: "authorization" },
+            { id: createduser?.id, type: "authorization", role: createduser?.role, userName: createduser?.userName, email: createduser?.email },
         );
 
         return token;
@@ -47,11 +47,43 @@ export const loginService = async (passwordrequest: string, userFound: User) => 
             return null;
         }
         else {
-            const token = jwt.sign({ id: userFound.id, type: "authorization" })
+            const token = jwt.sign({
+                id: userFound.id, 
+                type: "authorization",
+                role: userFound.role,
+                userName: userFound.userName,
+                email: userFound.email
+            })
             return token;
         }
     }
     catch (error) {
+        throw error;
+    }
+}
+
+export const addExpoToken = async (userId: string, expoPushToken: string) => {
+    try {
+        await prisma.user.update({
+            where: { id: userId },
+            data: { expoPushToken: expoPushToken }
+        })
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+export const changePasswordService = async (userId: string, newPassword: string)=> {
+    try {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await prisma.user.update({
+            where: { id: userId },
+            data: { password: hashedPassword }
+        });
+        return true;
+    } catch (error) {
+        console.error("Error while changing password:", error);
         throw error;
     }
 }

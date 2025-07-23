@@ -1,0 +1,47 @@
+name: CI Pipeline - Build and Smoke Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD : ${{ secrets.EMAIL }}
+      LOGINID: ${{ secrets.LOGINID }}
+      WISEPASSWORD: ${{ secrets.WISEPASSWORD }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      passwordAdmin: ${{ secrets.passwordAdmin }}
+      usernameadmin: ${{ secrets.usernameadmin }}
+      firstnameadmin : ${{ secrets.firstnameadmin }}
+      lastnameadmin: ${{ secrets.lastnameadmin }}
+      phonenumberadmin : ${{ secrets.phonenumberadmin }}
+      roleadmin: ${{ secrets.roleadmin }}
+      emailadmin : ${{ secrets.emailadmin }}
+      passwordMail: ${{ secrets.passwordMail }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Clean, Lint & Compile
+        run: npm run build
+
+      - name: Smoke Test - Verify Server Starts
+        run: |
+          node dist/index.js &                 # Start server in background
+          sleep 5                             # Wait for server to boot
+          curl -f http://localhost:3000      # Check server responds successfully
+          kill $(jobs -p)                    # Stop server
