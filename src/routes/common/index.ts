@@ -29,31 +29,25 @@ export interface IReqPropErr {
  */
 export function parseReq<U extends TSchema>(schema: U) {
   return (arg: unknown) => {
-    // Don't alter original object
     if (isObject(arg)) {
       arg = { ...arg };
     }
-    // Error callback
     const errArr: IReqPropErr[] = [];
-    const errCb = (
-      prop = 'undefined',
-      value?: unknown,
-      caughtErr?: unknown,
-    ) => {
-      const err: IReqPropErr = { prop, value };
-      if (caughtErr !== undefined) {
-        let moreInfo;
-        if (!isString(caughtErr)) {
-          moreInfo = JSON.stringify(caughtErr);
-        } else {
-          moreInfo = caughtErr;
-        }
-        err.moreInfo = moreInfo;
-      }
-      errArr.push(err);
+
+    // Adapt error callback to map IParseObjectError[] to IReqPropErr[]
+    const errCb = (errors: any[]) => {
+      errArr.push(
+        ...errors.map((err) => ({
+          prop: err.prop ?? '',
+          value: err.value,
+          moreInfo: err.moreInfo,
+        }))
+      );
     };
-    // Return
-    const retVal = parseObject<U>(schema, errCb)(arg);
+
+    const schemaTyped = schema as unknown as TSchema<U>;
+    const retVal = parseObject<U>(schemaTyped, errCb)(arg);
+
     if (errArr.length > 0) {
       throw new ValidationErr(errArr);
     }

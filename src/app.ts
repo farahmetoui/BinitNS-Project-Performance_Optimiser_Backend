@@ -16,7 +16,7 @@ import ENV from '@src/common/ENV';
 import HttpStatusCodes from '@src/common/HttpStatusCodes';
 import { RouteError } from '@src/common/route-errors';
 import { NodeEnvs } from '@src/common/constants';
-import { createAdminUser } from '../adminInjection';
+import { createAdminUser } from './adminInjection';
 import authorization from './middleware/authorization';
 import { StatusCodes } from 'http-status-codes';
  
