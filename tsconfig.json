@@ -22,11 +22,11 @@
     "swc": true,
     "require": [
       "tsconfig-paths/register",
-      "./config.ts"
+      "./src/config.ts"
     ]
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts", "src/config.ts",
      
   ],
   "exclude": [

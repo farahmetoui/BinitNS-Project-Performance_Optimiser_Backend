@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --ext ts --exec ts-node ./src",
     "dev:hot": "nodemon --exec \"npm run dev\" --watch ./src --ext .ts",
     "lint": "eslint --flag unstable_ts_config",
-    "start": "NODE_ENV=production node -r ./config.js ./dist",
+    "start": "cross-env NODE_ENV=production node -r ./dist/config.js ./dist",
     "test": "NODE_ENV=test ts-node ./spec",
     "test:hot": "nodemon --exec \"npm run test\" --watch ./src --watch ./spec --ext .ts",
     "type-check": "tsc --noEmit"
