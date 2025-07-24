@@ -1,10 +1,10 @@
 import express from "express"; 
-import {createApplication, getAllApplicationsController } from "../../src/controllers/AppToTestController";
-import {getMetricsAverageController, saveMetrics} from "../../src/controllers/MetricsContoller"
-import {getDetailMetricsController, getTestMetricsById, getWebVitalById } from "../../src/controllers/WebVitalController";
-import {getTestAppController, getTestsByMonthController, getTotalTests } from "../../src/controllers/TestController";
-import authorization from "../../src/middleware/authorization";
-import { paginateTablesController } from "../../src/controllers/PaginationController";
+import {createApplication, getAllApplicationsController } from "../controllers/AppToTestController";
+import {getMetricsAverageController, saveMetrics} from "../controllers/MetricsContoller"
+import {getDetailMetricsController, getTestMetricsById, getWebVitalById } from "../controllers/WebVitalController";
+import {getTestAppController, getTestsByMonthController, getTotalTests } from "../controllers/TestController";
+import authorization from "../middleware/authorization";
+import { paginateTablesController } from "../controllers/PaginationController";
 
 
 const router = express.Router();
