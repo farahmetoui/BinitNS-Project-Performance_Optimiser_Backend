@@ -52,10 +52,15 @@ if (ENV.NodeEnv === NodeEnvs.Production.valueOf()) {
   app.use(helmet());
 }
 
+
+app.get('/ping', (_req, res) => {
+  res.status(200).send('pong');
+});
 const downloadsPath = path.join(process.cwd(), 'Downloads');
 console.log(" CHEMIN STATIQUE POUR /reports =", downloadsPath);
 app.use('/reports', express.static(downloadsPath));
 app.use("/api", authenticationRouter)
+
 //Use middleware
 app.use(authorization);
 
@@ -109,3 +114,21 @@ app.get('/', (_: Request, res: Response) => {
 ******************************************************************************/
 
 export default app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

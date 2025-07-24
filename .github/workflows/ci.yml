@@ -45,5 +45,5 @@ jobs:
         run: |
           NODE_ENV=production node dist/index.js &                 # Start server in background
           sleep 5                             # Wait for server to boot
-          curl -f http://localhost:3000      # Check server responds successfully
+          curl -f http://localhost:3000/ping      # Check server responds successfully
           kill $(jobs -p)                    # Stop server
