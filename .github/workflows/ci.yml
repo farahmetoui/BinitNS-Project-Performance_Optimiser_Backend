@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NODE_ENV: production
       EMAIL: ${{ secrets.EMAIL }}
       PASSWORD : ${{ secrets.EMAIL }}
       LOGINID: ${{ secrets.LOGINID }}
@@ -43,7 +42,7 @@ jobs:
 
       - name: Smoke Test - Verify Server Starts
         run: |
-          node dist/index.js &                 # Start server in background
+          NODE_ENV=production node dist/index.js &                 # Start server in background
           sleep 5                             # Wait for server to boot
           curl -f http://localhost:3000      # Check server responds successfully
           kill $(jobs -p)                    # Stop server
