@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllDetailMetricsByApp, getMetricsByTest, getwebvitalbyId } from "../../src/services/WebVital";
+import { getAllDetailMetricsByApp, getMetricsByTest, getwebvitalbyId } from "../services/WebVital";
 
 export const getDetailMetricsController = async (req: Request, res: Response) => {
     try {
