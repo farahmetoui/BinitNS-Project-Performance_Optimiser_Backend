@@ -24,6 +24,7 @@ jobs:
       roleadmin: ${{ secrets.roleadmin }}
       emailadmin : ${{ secrets.emailadmin }}
       passwordMail: ${{ secrets.passwordMail }}
+      PORT: 3000
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
