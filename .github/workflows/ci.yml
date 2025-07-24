@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      NODE_ENV: production
       EMAIL: ${{ secrets.EMAIL }}
       PASSWORD : ${{ secrets.EMAIL }}
       LOGINID: ${{ secrets.LOGINID }}
