@@ -47,3 +47,5 @@ jobs:
           sleep 5                             # Wait for server to boot
           curl -f http://localhost:3000/ping      # Check server responds successfully
           kill $(jobs -p)                    # Stop server
+      - name: Trigger Render Deploy
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
