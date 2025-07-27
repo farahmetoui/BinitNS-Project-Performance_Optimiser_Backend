@@ -56,6 +56,10 @@ if (ENV.NodeEnv === NodeEnvs.Production.valueOf()) {
 app.get('/ping', (_req, res) => {
   res.status(200).send('pong');
 });
+
+const reportsPath = path.join(process.cwd(), 'Downloads');
+app.use('/reports', express.static(reportsPath));
+
 const downloadsPath = path.join(process.cwd(), 'Downloads');
 console.log(" CHEMIN STATIQUE POUR /reports =", downloadsPath);
 app.use('/reports', express.static(downloadsPath));
