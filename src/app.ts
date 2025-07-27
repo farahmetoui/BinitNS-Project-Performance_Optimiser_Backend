@@ -57,12 +57,23 @@ app.get('/ping', (_req, res) => {
   res.status(200).send('pong');
 });
 
-const reportsPath = path.join(process.cwd(), 'Downloads');
-app.use('/reports', express.static(reportsPath));
+// const reportsPath = path.join(process.cwd(), 'Downloads');
+// app.use('/reports', express.static(reportsPath));
 
 const downloadsPath = path.join(process.cwd(), 'Downloads');
 console.log(" CHEMIN STATIQUE POUR /reports =", downloadsPath);
-app.use('/reports', express.static(downloadsPath));
+// app.use('/reports', express.static(downloadsPath));
+app.use('/reports', express.static(downloadsPath, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.html')) {
+      res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline';"
+      );
+    }
+  }
+}));
+
 app.use("/api", authenticationRouter)
 
 //Use middleware
