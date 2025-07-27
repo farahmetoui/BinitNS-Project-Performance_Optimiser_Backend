@@ -35,6 +35,15 @@ app.use(
   })
 );
 
+const frontendPath = path.join(__dirname, '../frontend-build');
+app.use(express.static(frontendPath));
+
+// Pour toutes les routes non API, renvoyer index.html
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
+
 
 // **** Setup
 
